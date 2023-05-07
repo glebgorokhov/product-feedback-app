@@ -53,6 +53,7 @@ Users should be able to:
 - [Prisma](https://prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
+- [Million.js](https://millionjs.org/)
 
 ### Learn More
 
