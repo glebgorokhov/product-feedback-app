@@ -1,16 +1,25 @@
-type TailwindInput = string | boolean | TailwindArray | TailwindObject;
-type TailwindArray = TailwindInput[];
+export type TailwindInput = string | boolean | TailwindArray | TailwindObject;
+export type TailwindArray = TailwindInput[];
+
 interface TailwindObject {
   [key: string]: TailwindInput;
 }
 
-export default function tw(input: TailwindInput, prefix = ""): string {
+export function tw(input: TailwindInput, prefix = ""): string {
   if (typeof input === "string") {
-    return prefix ? `${prefix}:${input}` : input;
+    return prefix
+      ? input
+          .split(" ")
+          .map((c) => `${prefix}:${c}`)
+          .join(" ")
+      : input;
   }
 
   if (Array.isArray(input)) {
-    return input.map((item) => tw(item, prefix)).join(" ");
+    return input
+      .map((item) => tw(item, prefix))
+      .join(" ")
+      .trim();
   }
 
   if (typeof input === "object") {
@@ -27,4 +36,11 @@ export default function tw(input: TailwindInput, prefix = ""): string {
   }
 
   return "";
+}
+
+export function twExtract(content: string) {
+  const regex = /tw\((.*?)\)/g;
+  const matches = content.match(regex);
+  console.log(matches);
+  return content.match(/[^<>"'`\s]*/);
 }

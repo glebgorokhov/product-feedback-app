@@ -3,8 +3,13 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import { api } from "@/utils/api";
+import style from "@/styles/layout.style";
 
-import "@/styles/globals.css";
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/500.css";
+import "@fontsource/jost/600.css";
+import "@/styles/globals.scss";
+import SidebarBlock from "@/components/Sidebar";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -12,7 +17,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <div className={style.layout}>
+        <SidebarBlock className={style.layoutSidebar} />
+        <div className={style.layoutMain}>
+          <Component {...pageProps} />
+        </div>
+      </div>
     </SessionProvider>
   );
 };
