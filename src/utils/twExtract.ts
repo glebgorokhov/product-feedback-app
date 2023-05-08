@@ -12,18 +12,18 @@ function extractTailwindClasses(folderPath: string): string[] {
   filePaths.forEach((filePath) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const fileContent = fs.readFileSync(filePath, "utf-8");
-    const classMatches = fileContent.match(/tws\(([\s\S]*?)\)/g);
+    const classMatches = fileContent.match(/tw\(([\s\S]*?)\)/g);
 
     if (classMatches) {
       classMatches.forEach((match) => {
         // Remove function brackets etc.
-        const jsonInput = match.slice(4, -1).trim();
+        const jsonInput = match.slice(3, -1).trim();
 
         try {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          const input: TailwindInput[] = eval(jsonInput);
+          const input: TailwindInput = eval(jsonInput);
           const extendedClass = tw(input);
-          extendedClasses.push(extendedClass);
+          extendedClasses.push(...extendedClass.split(" "));
         } catch (error) {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           console.error(`Error parsing JSON input for ${filePath}: ${error}`);
@@ -32,7 +32,7 @@ function extractTailwindClasses(folderPath: string): string[] {
     }
   });
 
-  console.log("Generated classes from tws functions");
+  console.log("Generated classes from tws functions", extendedClasses);
 
   return extendedClasses;
 }

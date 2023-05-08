@@ -10,9 +10,9 @@ const style = {
   wrapper: "p-6 flex items-center flex-wrap gap-2 bg-white rounded",
   filter: ({ isActive = false }) =>
     classNames([
-      "px-4 py-1.5 rounded text-smxs font-semibold",
+      "px-4 py-1.5 rounded text-smxs font-semibold transition-colors",
       {
-        "bg-neutral-100 text-blue-600": !isActive,
+        "bg-neutral-100 text-blue-600 hover:bg-neutral-150": !isActive,
         "bg-blue-600 text-white": isActive,
       },
     ]),

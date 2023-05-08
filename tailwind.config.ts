@@ -1,5 +1,6 @@
 import { type Config } from "tailwindcss";
-import {extractTailwindClasses} from "./src/utils/twExtract";
+import plugin from "tailwindcss/plugin";
+import { extractTailwindClasses } from "./src/utils/twExtract";
 
 const pxToRem = (px: number) => `${px / 16}rem`;
 const extractedClasses = extractTailwindClasses("./src");
@@ -16,6 +17,7 @@ export default {
       neutral: {
         50: "#F7F8FD",
         100: "#F2F4FF",
+        150: "#CFD7FF",
         200: "#CDD2EE",
         400: "#647196", // Same for #656EA3 because they are too close
         500: "#3A4374", // Same for #373F68" because they are too close
@@ -53,5 +55,10 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("not-first", "&:not(:first-child)");
+      addVariant("hocus", ["&:hover", "&:focus"]);
+    }),
+  ],
 } satisfies Config;
